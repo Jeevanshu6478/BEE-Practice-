@@ -1,6 +1,6 @@
 const http = require('http'); //built in module In Node.js
 const server = http.createServer((req, res) => { //createServer is a function 
-    res.end("We are running server on port 8080"); 
+    res.end("Nodemon is working"); 
 });
 
 server.listen(8080, () => {  //Start listening for requests
