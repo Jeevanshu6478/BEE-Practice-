@@ -12,7 +12,7 @@ app.use(e.json());
 app.get("/", (req, res) => {   //request and response are 2 objects automatically provided by Express.
     res.send("Welcome to Express Application");
 });
-
+    
 
 // GET /students
 // Read all students from students.json file and send to client
@@ -60,6 +60,31 @@ app.post("/students", (req, res) => {
 
     // Send response after successfully adding new student
     res.send("Student Submitted Successfully");
+});
+
+app.get("/students/:id", (req, res) => { //Here :id is a route parameter
+    // Read student data from JSON file 
+    const data = fs.readFileSync("student.json", "utf-8");
+
+    //Convert JSON string into JavaScript array
+    const students = JSON.parse(data);
+
+    //Get ID from URL and convert it to number
+    const id = Number(req.params.id); //Express takes the 2 from the URL and stores it in req.params.id 
+    // It is a string, not a number so Number() converts it.
+
+    //Find student whose ID  matches the URL ID
+    const student = students.find((s) => s.id === id);
+    //Here s represents one student at a time which it takes from students js array which we converted above.
+    //s.id accessess the student's id
+
+    //If student doesn't exists, send message
+    if(!student){
+        return res.send("Student not found");
+    }
+
+    // Send the found student as response
+    res.send(student);
 });
 
 
